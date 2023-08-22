@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
+/*
+ * main - simple shell.
+ * descreption: simple shell.
+ */
+
+int main(void)
+{
+	char *L = NULL;
+	size_t lenght = 0;
+	pid_t pid;
+
+	while (1)
+	{
+		write(1, "$ ", 2);
+
+		if (getline(&L, &lenght, stdin) == -1)
+		{
+			perror("getline");
+			break;
+		}
+		L[strlen(L) - 1] = '\0';
+
+		pid = fork();
+
+		if (pid == -1)
+		{
+			perror("fork");
+				break;
+		}
+
+		if (pid == 0)
+		{
+			char **args;
+			args = (char **)malloc(sizeof(char *) * 2);
+
+			if (args == NULL)
+			{
+				perror("malloc");
+				exit(EXIT_FAILURE);
+			}
+			args[0] = L;
+			args[1] = NULL;
+
+			if (execve(args[0], args, NULL) == -1)
+			{	
+				perror("execve");
+				free(args);
+				exit(EXIT_FAILURE);
+			}
+		}
+		else
+		{
+			int status;
+			waitpid(pid, &status, 0);
+		}
+	}
+	free(L);
+	exit(EXIT_SUCCESS);
+}

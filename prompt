@@ -1,0 +1,56 @@
+#include "shell.h"
+#include "prompt.h"
+
+void prompt(char **av, char **env)
+{
+	char *str = NULL;
+	int i, status;
+	size_t n = 0;
+	ssize_t num_char;
+	char *argv[MAX_IN_LEN];
+	pid_t child_pid;
+
+	while (1)
+	{
+		if (isatty(STDIN_FILENO))
+		printf("cisfun$ ");
+
+		num_char = getline(&str, &n, stdin);
+		if (num_char == -1)
+		{
+			free(str);
+			exit(EXIT_FAILURE);
+		}
+		i = 0;
+		while (str[i])
+		{
+			if (str[i] == '\n')
+			{
+				str[i] = 0;
+				i++;
+			}
+		}
+		str[num_char - 1] = '\0';
+		argv[0] = str;
+		child_pid = fork();
+
+		if (child_pid == -1)
+		{
+			perror("fork");
+			free(str);
+			exit(EXIT_FAILURE);
+		}
+		if (child_pid == 0)
+		{
+			if (execve(argv[0], argv, env) == -1)
+			{
+				perror("execve");
+				printf("%s: No such file or directory\n", av[0]);
+				exit(EXIT_FAILURE);
+			}
+		}
+		else
+		       wait(&status);
+	}
+}
+
