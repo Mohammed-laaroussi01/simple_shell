@@ -21,7 +21,7 @@ int mun(int N1, int N2)
  *
  * Return: always 0 (success)
  *
- * Description: print the result by using the fonction mun
+ * Description: print the result by using the fonction 'mun'
  */
 int main(void)
 {
