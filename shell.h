@@ -29,6 +29,7 @@ char *our_strtok(char *str, const char *delim);
 size_t our_strlen(const char *str);
 int our_strcmp(const char *s1, const char *s2);
 void our_exit(void);
+int add(int nu1, int nu2);
 
 extern char **envi;
 extern char **environ;

@@ -26,7 +26,7 @@ int main(void)
 {
 	int result = add(17, 5);
 
-	printf("The sum of 10 and 5 is %d\n", result);
+	printf("The sum is %d\n", result);
 
 	return (0);
 }
