@@ -1,14 +1,9 @@
 #include "shell.h"
 /**
- * our_strtok - Parses a string into tokens,
- *              using a set of delimiters. This function maintains
- * state across multiple calls,
- *              allowing for successive tokenization of the same string.
- *
- * @str: The input string to tokenize.
- * @dl : A string containing delimiter characters.
- * Return : A pointer stat to the next token,
- *              or (NULL) if there are no more tokens or an error occurs.
+ * our_strtok - Token A String Into Token (strtrok)
+ * @str: String
+ * @dl: Delimiter
+ * Return: Pointer To The Next Token Or NULL
  */
 char *our_strtok(char *str, const char *dl)
 {
@@ -34,4 +29,45 @@ char *our_strtok(char *str, const char *dl)
 	}
 
 	return (beg);
+}
+/**
+ * our_strchr - Locate Charactere In Str
+ * @str:String looking for In char
+ * @character:Char To Search For
+ * Return: Pointer To Char*
+ */
+
+char *our_strchr(const char *str, int character)
+{
+	while (*str != '\0')
+	{
+	if (*str == character)
+	{
+		return ((char *)str);
+	}
+	str++;
+	}
+	if (character == '\0')
+	{
+		return ((char *)str);
+	}
+	return (NULL);
+}
+/**
+ * our_strdup - Duplicate A Str
+ * @src:String
+ * Return: Duplicate String Failed Null
+ */
+
+char *our_strdup(const char *src)
+{
+	size_t len = strlen(src) + 1;
+	char *dest = malloc(len);
+
+	if (dest != NULL)
+	{
+		our_strcpy(dest, src);
+	}
+
+	return (dest);
 }
